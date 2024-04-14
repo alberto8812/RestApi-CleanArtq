@@ -3,7 +3,7 @@
 
 import { Request, Response } from "express";
 import { prisma } from "../../data/postgres";
-import { CreateTodoDto } from "../../domain/dtos";
+import { CreateTodoDto, UpdateTodoDto } from "../../domain/dtos";
 
 
 export class TodosController {
@@ -39,23 +39,21 @@ export class TodosController {
 
   public async updateTodo(req: Request, res: Response) {
     const id = +req.params.id;
+    const [error,updateTodoDto]=UpdateTodoDto.update({...req.body,id});
 
-    if (isNaN(id))
-      return res.status(400).json({ error: "ID argument is no a number" });
+    if(error)return res.status(200).json({error});
+
 
     const findProduct = await prisma.todos.findUnique({where:{id}})
     if (!findProduct)
       return res.status(404).json({ error: `Tod with id ${id} not found` });
 
-    const { text,createAt } = req.body;
-    if (!text)
-      return res.status(400).json({ error: "text property is requiered" });
  
     const todo= await prisma.todos.update(
     {
         where:{id},
         data:{
-            ...req.body
+            ...updateTodoDto?.values
         }
     }
     )
