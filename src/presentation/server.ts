@@ -22,7 +22,8 @@ export class Server {
     }
   async start() {
     //middleware
-
+    this.app.use(express.json());//trabajar con json
+    this.app.use(express.urlencoded({extended:true}))//trabajar con x-w
     //public folder
     this.app.use(express.static(this.publicPath));
 

@@ -10,6 +10,8 @@ export class TodoRoutes {
         const todosController= new TodosController
         router.get( '/',todosController.getTodos)//solo envuamos la referencia de la funcion 
         router.get( '/:id',todosController.getTodoById)//solo envuamos la referencia de la funcion 
+        router.post( '/',todosController.createTodo)//solo envuamos la referencia de la funcion 
+        router.put( '/:id',todosController.updateTodo)//solo envuamos la referencia de la funcion 
 
         return router
     }
