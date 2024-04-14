@@ -1,4 +1,5 @@
 import { envs } from "./config/envs";
+import { AppRoutes } from "./presentation/routes";
 import { Server } from "./presentation/server";
 
 (() => {
@@ -6,7 +7,10 @@ import { Server } from "./presentation/server";
 })();
 
 function main() {
-
-  const server=new Server({PORT:envs.PORT,PUBLIC_PATH:envs.PUBLIC_PATH})
-  server.start()
+  const server = new Server({
+    PORT: envs.PORT,
+    PUBLIC_PATH: envs.PUBLIC_PATH,
+    routes: AppRoutes.route,
+  });
+  server.start();
 }
