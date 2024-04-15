@@ -1,30 +1,33 @@
-// se asemanaja a la base de datos pero son los datos que vamos a usar en nuestra aplicacion
+
+
+
+
 export class TodoEntity {
+
   constructor(
     public id: number,
     public text: string,
-    public createAt?: Date | null
+    public completedAt?: Date|null
   ) {}
 
-  get iCompleted(){
-    //nos didica si el createAt tiene un valor
-    return !!this.createAt;
+  get isCompleted() {
+    return !!this.completedAt;
   }
 
-  public static fromOjbect(object:{[key:string]:any}):TodoEntity{
-    const {id,text,createAt}=object
-    if(!id) throw 'id isrequired'
-    if(!text) throw 'text isrequired'
+  public static fromObject( object: {[key: string]: any} ): TodoEntity {
+    const { id, text, completedAt } = object;
+    if ( !id ) throw 'Id is required';
+    if ( !text ) throw 'text is required';
 
-    let newCompleteAt;
-    if(createAt){
-      newCompleteAt=new Date(createAt);
-      if(isNaN(newCompleteAt.getTime())){
-        throw 'completeAt is no a validate date'
+    let newCompletedAt;
+    if ( completedAt ) {
+      newCompletedAt = new Date(completedAt);
+      if ( isNaN( newCompletedAt.getTime() ) ) {
+        throw 'CompletedAt is not a valid date'
       }
     }
-    return new TodoEntity(id,text,createAt)
+
+    return new TodoEntity(id, text, completedAt)
   }
 
-  
 }
